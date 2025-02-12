@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "memorex/version"
+require_relative "memorex/memory"
 
 module Memorex
   def memoize(method_name)
@@ -24,11 +25,17 @@ module Memorex
       #{visibility} def #{method_name}
         raise ArgumentError, "unsupported block argument" if block_given?
 
-        cache = (@_memorex_cache ||= {})
-        cache.fetch(:#{method_name}) { cache[:#{method_name}] = super() }
+        memory = (@_memorex_cache ||= {})
+        memory.fetch(:#{method_name}) { memory[:#{method_name}] = super() }
       end
     RUBY
 
     method_name
+  end
+
+  module API
+    private def memorex
+      ::Memorex::Memory.new(@_memorex_cache ||= {})
+    end
   end
 end
