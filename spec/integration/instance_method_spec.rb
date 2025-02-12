@@ -10,6 +10,19 @@ RSpec.describe 'scenario: instance method' do
     expect(subject.value).to be(subject.value)
   end
 
+  it 'defines MemorexMethods' do
+    subject = Class.new do
+      extend Memorex
+      def value = Once.assert(:value)
+    end
+
+    expect(subject.const_defined?(:MemorexMethods)).to be(false)
+
+    subject.memoize(:value)
+    expect(subject::MemorexMethods).to be_a(Module)
+    expect(subject.ancestors).to include(subject::MemorexMethods)
+  end
+
   it 'memoizes an instance method when the object is frozen' do
     subject = Class.new do
       extend Memorex

@@ -67,4 +67,38 @@ RSpec.describe 'scenario: inheritance' do
 
     expect(subject.value).to be(subject.value)
   end
+
+  it 'does not inherit MemorexMethods module' do
+    parent = Class.new do
+      extend Memorex
+      memoize def foo = Once.assert(:foo)
+    end
+
+    child = Class.new(parent) do
+      def bar = Once.assert(:bar)
+    end
+
+    expect(child::MemorexMethods).to be(parent::MemorexMethods)
+
+    child.memoize(:bar)
+    expect(child::MemorexMethods).not_to be(parent::MemorexMethods)
+  end
+
+  it 'does not inherit MemorexMethods module from included module' do
+    parent = Module.new do
+      extend Memorex
+      memoize def foo = Once.assert(:foo)
+    end
+
+    child = Class.new do
+      extend Memorex
+      include parent
+      def bar = Once.assert(:bar)
+    end
+
+    expect(child::MemorexMethods).to be(parent::MemorexMethods)
+
+    child.memoize(:bar)
+    expect(child::MemorexMethods).not_to be(parent::MemorexMethods)
+  end
 end
