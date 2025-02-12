@@ -2,7 +2,7 @@
 
 module Memorex
   # @api private
-  module Utils
+  module Internal
     # Retrieve or define a module named MemorexMethods
     def self.methods_module(owner)
       if owner.const_defined?(:MemorexMethods, false)

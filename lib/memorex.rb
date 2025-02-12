@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "memorex/internal"
 require_relative "memorex/memory"
-require_relative "memorex/utils"
 require_relative "memorex/version"
 
 module Memorex
@@ -25,10 +25,10 @@ module Memorex
   #   end
   #
   def memoize(method_name)
-    visibility = Utils.visibility(self, method_name)
-    methods = Utils.methods_module(self)
+    visibility = Internal.visibility(self, method_name)
+    methods = Internal.methods_module(self)
 
-    if Utils.method_defined?(methods, method_name)
+    if Internal.method_defined?(methods, method_name)
       raise ArgumentError, "`#{method_name.inspect}` is already memoized"
     end
 
