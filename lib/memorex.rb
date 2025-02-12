@@ -29,7 +29,7 @@ module Memorex
 
     @_memorex_methods ||= Module.new do
       def freeze
-        @_memorex_cache = {}
+        @_memorex_cache ||= {}
         super()
       end
     end.tap { |mod| prepend(mod) }
