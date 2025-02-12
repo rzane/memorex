@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "memorex/internal"
-require_relative "memorex/memory"
-require_relative "memorex/version"
+require_relative 'memorex/internal'
+require_relative 'memorex/memory'
+require_relative 'memorex/version'
 
 # Memorex provides a simple way to memoize methods in Ruby.
 module Memorex
@@ -78,7 +78,7 @@ module Memorex
     # Used to manipulate the memoized cache directly
     #
     # @api public
-    # @return [Memory]
+    # @return [Memorex::Memory]
     #
     # @example
     #   class State
