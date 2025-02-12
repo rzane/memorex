@@ -25,18 +25,14 @@ module Memorex
   #   end
   #
   def memoize(method_name)
-    @_memorex_methods ||= Methods.clone.tap do |mod|
-      const_set(:MemoizedMethods, mod)
-      prepend(mod)
-    end
-
     visibility = Utils.visibility(self, method_name)
+    methods = Utils.methods_module(self)
 
-    if Utils.method_defined?(@_memorex_methods, method_name)
+    if Utils.method_defined?(methods, method_name)
       raise ArgumentError, "`#{method_name.inspect}` is already memoized"
     end
 
-    @_memorex_methods.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+    methods.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
       #{visibility} def #{method_name}
         raise ArgumentError, "unsupported block argument" if block_given?
 
