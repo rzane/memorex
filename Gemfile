@@ -8,6 +8,7 @@ gemspec
 gem "rake"
 gem "rspec"
 gem "standard"
+gem "sord"
 
 gem "sorbet-runtime"
 gem "activesupport"
