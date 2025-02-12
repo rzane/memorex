@@ -43,7 +43,13 @@ module Memorex
         raise ArgumentError, "unsupported block argument" if block_given?
 
         memory = (@_memorex_cache ||= {})
-        memory.fetch(:#{method_name}) { memory[:#{method_name}] = super() }
+        cached = memory[:#{method_name}]
+
+        if cached || memory.key?(:#{method_name})
+          cached
+        else
+          memory[:#{method_name}] = super()
+        end
       end
     RUBY
 
