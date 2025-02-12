@@ -1,28 +1,59 @@
-# Memorex
+# Memorex 🦖
 
-TODO: Delete this and the text below, and describe your gem
+Memorex is a simple solution for caching method return values in Ruby.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/memorex`. To experiment with that code, run `bin/console` for an interactive prompt.
+Memorex is designed with the following features in mind:
+
+* Works with Sorbet signatures.
+* Works with frozen objects.
+* Returns a Symbol, so you can chain decorators.
+* Doesn't memoize methods with arguments, which is a feature, not a bug.
 
 ## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-```
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle add memorex
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+To memoize a method, simply extend the class with `Memorex` and use the `memoize` decorator.
+
+```ruby
+class Client
+  extend Memorex
+
+  memoize def response
+    Net::HTTP.get(URI('https://example.com'))
+  end
+end
+
+client = Client.new
+client.response # => "<!doctype html>..."
+```
+
+Memorex also provides an API for directly manipulating the cache.
+
+```ruby
+class Client
+  extend Memorex
+  include Memorex::API
+  # ... etc ...
+end
+
+client = Client.new
+
+# Add values to the cache
+client.memorex.merge!(response: "hello")
+
+# Remove a value from the cache
+client.memorex.delete(:response)
+
+# Clear the cache
+client.memorex.clear
+```
 
 ## Development
 
