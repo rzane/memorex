@@ -4,10 +4,12 @@ Memorex is a simple solution for caching method return values in Ruby.
 
 Memorex is designed with the following features in mind:
 
-* Works with Sorbet signatures.
-* Works with frozen objects.
-* Returns a Symbol, so you can chain decorators.
-* Doesn't memoize methods with arguments, which is a feature, not a bug.
+* Fully compatible with Sorbet.
+* Support for memoizing methods on frozen objects.
+* Support for preloading and resetting memoized values.
+* Support for memoization of class and module methods.
+* Support for inheritance of memoized class and instance methods.
+* No support for memoization of methods with arguments, which is a feature, not a bug.
 
 ## Installation
 
@@ -63,4 +65,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/memorex.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rzane/memorex.
