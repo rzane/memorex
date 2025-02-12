@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Memorex::API do
-  it 'provides a helper to manage the cache directly' do
+  it "provides a helper to manage the cache directly" do
     subject = Class.new {
       extend Memorex
       include Memorex::API

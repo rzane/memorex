@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe 'scenario: class method' do
-  it 'memoizes a class method' do
+RSpec.describe "scenario: class method" do
+  it "memoizes a class method" do
     subject = Class.new do
       class << self
         extend Memorex
@@ -12,7 +12,7 @@ RSpec.describe 'scenario: class method' do
     expect(subject.value).to be(subject.value)
   end
 
-  it 'defines MemorexMethods' do
+  it "defines MemorexMethods" do
     subject = Class.new do
       class << self
         extend Memorex
@@ -26,7 +26,7 @@ RSpec.describe 'scenario: class method' do
     expect(subject.singleton_class::MemorexMethods).to be_a(Module)
   end
 
-  it 'memoizes a class method when the class is frozen' do
+  it "memoizes a class method when the class is frozen" do
     subject = Class.new do
       class << self
         extend Memorex
@@ -38,11 +38,13 @@ RSpec.describe 'scenario: class method' do
     expect(subject.value).to be(subject.value)
   end
 
-  it 'preserves the visiblity of a private class method' do
+  it "preserves the visiblity of a private class method" do
     subject = Class.new do
       class << self
         extend Memorex
+
         private
+
         memoize def value = Once.assert(:value)
       end
     end
@@ -51,11 +53,13 @@ RSpec.describe 'scenario: class method' do
     expect(subject.send(:value)).to be(subject.send(:value))
   end
 
-  it 'preserves the visibility of a protected class method' do
+  it "preserves the visibility of a protected class method" do
     subject = Class.new do
       class << self
         extend Memorex
+
         protected
+
         memoize def value = Once.assert(:value)
       end
     end

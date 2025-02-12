@@ -1,27 +1,27 @@
-require 'bundler/inline'
-require 'benchmark/ips'
-require 'memo_wise'
-require 'memoist'
-require 'memorex'
+require "bundler/inline"
+require "benchmark/ips"
+require "memo_wise"
+require "memoist"
+require "memorex"
 
 strategies = {
-  'Control' => Class.new {
+  "Control" => Class.new {
     def value
       @value ||= 100
     end
   },
-  'Memorex' => Class.new {
+  "Memorex" => Class.new {
     extend Memorex
     memoize def value = 100
   },
-  'Memoist' =>  Class.new {
+  "Memoist" => Class.new {
     extend Memoist
     memoize def value = 100
   },
-  'MemoWise' => Class.new {
+  "MemoWise" => Class.new {
     prepend MemoWise
     memo_wise def value = 100
-  },
+  }
 }
 
 puts "== Cold cache =="

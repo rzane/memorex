@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe 'scenario: sorbet' do
-  it 'memoizes an instance method with a Sorbet signature' do
+RSpec.describe "scenario: sorbet" do
+  it "memoizes an instance method with a Sorbet signature" do
     subject = Class.new do
       extend Memorex
       extend T::Sig
@@ -13,7 +13,7 @@ RSpec.describe 'scenario: sorbet' do
     expect(subject.value).to be(subject.value)
   end
 
-  it 'memoizes an instance method with a Sorbet signature in an included concern' do
+  it "memoizes an instance method with a Sorbet signature in an included concern" do
     parent = Module.new do
       extend ActiveSupport::Concern
       extend T::Sig
