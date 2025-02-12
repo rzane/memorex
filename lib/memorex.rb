@@ -5,6 +5,25 @@ require_relative "memorex/utils"
 require_relative "memorex/version"
 
 module Memorex
+  # Convert a method to a memoized method
+  #
+  # Memorex does not support memoizing methods that accept arguments.
+  #
+  # @api public
+  # @param method_name [Symbol] the name of the method to memoize
+  # @return [Symbol] the name of the memoized method
+  # @raise [ArgumentError] when the method is is not defined
+  # @raise [ArgumentError] when the method is already memoized
+  #
+  # @example
+  #   class State
+  #     extend Memorex
+  #
+  #     memoize def id
+  #       SecureRandom.uuid
+  #     end
+  #   end
+  #
   def memoize(method_name)
     visibility = Utils.visibility(self, method_name)
 
@@ -26,8 +45,28 @@ module Memorex
     method_name
   end
 
+  # This module provides a {#memorex} helper that can be used to manipulate the
+  # memoization cache directly.
   module API
-    private def memorex
+    # Used to manipulate the memoized cache directly
+    #
+    # @api public
+    # @return [Memory]
+    #
+    # @example
+    #   class State
+    #     extend Memorex
+    #     include Memorex::API
+    #
+    #     memoize def id
+    #       SecureRandom.uuid
+    #     end
+    #
+    #     def reset!
+    #       memorex.clear
+    #     end
+    #   end
+    def memorex
       ::Memorex::Memory.new(@_memorex_cache ||= {})
     end
   end
