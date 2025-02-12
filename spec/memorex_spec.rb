@@ -142,12 +142,32 @@ RSpec.describe Memorex do
 
   it 'raises an exception at when memoizing an undefined method' do
     subject = Class.new { extend Memorex }
-    expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is not a method")
+    expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is not defined")
   end
 
-  it 'raises an exception when the method is already memoized' do
+  it 'raises an exception when a public method is already memoized' do
     subject = Class.new do
       extend Memorex
+      memoize def value = Once.assert(:value)
+    end
+
+    expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is already memoized")
+  end
+
+  it 'raises an exception when a private method is already memoized' do
+    subject = Class.new do
+      extend Memorex
+      private
+      memoize def value = Once.assert(:value)
+    end
+
+    expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is already memoized")
+  end
+
+  it 'raises an exception when a protected method is already memoized' do
+    subject = Class.new do
+      extend Memorex
+      protected
       memoize def value = Once.assert(:value)
     end
 

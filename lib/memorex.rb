@@ -4,12 +4,6 @@ require_relative "memorex/version"
 
 module Memorex
   def memoize(method_name)
-    @_memorex_methods ||= Module.new.tap { |mod| prepend(mod) }
-
-    if @_memorex_methods.method_defined?(method_name)
-      raise ArgumentError, "`#{method_name.inspect}` is already memoized"
-    end
-
     visibility = if private_method_defined?(method_name)
       :private
     elsif protected_method_defined?(method_name)
@@ -17,7 +11,13 @@ module Memorex
     elsif public_method_defined?(method_name)
       :public
     else
-      raise ArgumentError, "`#{method_name.inspect}` is not a method"
+      raise ArgumentError, "`#{method_name.inspect}` is not defined"
+    end
+
+    @_memorex_methods ||= Module.new.tap { |mod| prepend(mod) }
+
+    if @_memorex_methods.method_defined?(method_name) || @_memorex_methods.private_method_defined?(method_name)
+      raise ArgumentError, "`#{method_name.inspect}` is already memoized"
     end
 
     @_memorex_methods.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
