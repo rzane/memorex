@@ -10,9 +10,14 @@ module Memorex
   # @return [Module]
   def memorex_methods
     @_memorex_methods ||= Module.new do
+      def initialize(*, **)
+        @_memorex_cache = {}
+        super
+      end
+
       def freeze
         @_memorex_cache ||= {}
-        super()
+        super
       end
     end.tap { |mod| prepend(mod) }
   end
