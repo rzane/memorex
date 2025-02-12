@@ -6,6 +6,8 @@ require "securerandom"
 require "sorbet-runtime"
 
 module Once
+  Error = Class.new(StandardError)
+
   def self.calls
     @calls ||= Set.new
   end
@@ -14,7 +16,7 @@ module Once
     if calls.add?(name)
       SecureRandom.uuid
     else
-      raise "#{name} was already called"
+      raise Error, "#{name} was already called"
     end
   end
 end
