@@ -14,6 +14,16 @@ RSpec.describe Memorex do
     expect(subject.value).to be(subject.value)
   end
 
+  it 'memoizes an instance method when the object is frozen' do
+    subject = Class.new do
+      extend Memorex
+      memoize def value = Once.assert(:value)
+    end.new
+
+    subject.freeze
+    expect(subject.value).to be(subject.value)
+  end
+
   it 'preserves the visiblity of a private instance method' do
     subject = Class.new do
       extend Memorex

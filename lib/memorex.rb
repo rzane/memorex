@@ -27,7 +27,12 @@ module Memorex
   def memoize(method_name)
     visibility = Utils.visibility(self, method_name)
 
-    @_memorex_methods ||= Module.new.tap { |mod| prepend(mod) }
+    @_memorex_methods ||= Module.new do
+      def freeze
+        @_memorex_cache = {}
+        super()
+      end
+    end.tap { |mod| prepend(mod) }
 
     if Utils.method_defined?(@_memorex_methods, method_name)
       raise ArgumentError, "`#{method_name.inspect}` is already memoized"
