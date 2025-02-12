@@ -5,6 +5,18 @@ require_relative "memorex/utils"
 require_relative "memorex/version"
 
 module Memorex
+  # The module containing memoized method definitions
+  # @api public
+  # @return [Module]
+  def memorex_methods
+    @_memorex_methods ||= Module.new do
+      def freeze
+        @_memorex_cache ||= {}
+        super()
+      end
+    end.tap { |mod| prepend(mod) }
+  end
+
   # Convert a method to a memoized method
   #
   # Memorex does not support memoizing methods that accept arguments.
@@ -27,28 +39,21 @@ module Memorex
   def memoize(method_name)
     visibility = Utils.visibility(self, method_name)
 
-    @_memorex_methods ||= Module.new do
-      def freeze
-        @_memorex_cache ||= {}
-        super()
-      end
-    end.tap { |mod| prepend(mod) }
-
-    if Utils.method_defined?(@_memorex_methods, method_name)
+    if Utils.method_defined?(memorex_methods, method_name)
       raise ArgumentError, "`#{method_name.inspect}` is already memoized"
     end
 
-    @_memorex_methods.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+    memorex_methods.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
       #{visibility} def #{method_name}
         raise ArgumentError, "unsupported block argument" if block_given?
 
-        memory = (@_memorex_cache ||= {})
-        cached = memory[:#{method_name}]
+        cache = (@_memorex_cache ||= {})
+        value = cache[:#{method_name}]
 
-        if cached || memory.key?(:#{method_name})
-          cached
+        if value || cache.key?(:#{method_name})
+          value
         else
-          memory[:#{method_name}] = super()
+          cache[:#{method_name}] = super()
         end
       end
     RUBY
