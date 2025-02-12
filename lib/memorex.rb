@@ -1,23 +1,16 @@
 # frozen_string_literal: true
 
-require_relative "memorex/version"
 require_relative "memorex/memory"
+require_relative "memorex/utils"
+require_relative "memorex/version"
 
 module Memorex
   def memoize(method_name)
-    visibility = if private_method_defined?(method_name)
-      :private
-    elsif protected_method_defined?(method_name)
-      :protected
-    elsif public_method_defined?(method_name)
-      :public
-    else
-      raise ArgumentError, "`#{method_name.inspect}` is not defined"
-    end
+    visibility = Utils.visibility(self, method_name)
 
     @_memorex_methods ||= Module.new.tap { |mod| prepend(mod) }
 
-    if @_memorex_methods.method_defined?(method_name) || @_memorex_methods.private_method_defined?(method_name)
+    if Utils.method_defined?(@_memorex_methods, method_name)
       raise ArgumentError, "`#{method_name.inspect}` is already memoized"
     end
 
