@@ -5,6 +5,7 @@ module Memorex
   # @api private
   module Internal
     # Retrieve or define a module named MemorexMethods
+    # @param owner [Module]
     # @return [Module]
     def self.methods_module(owner)
       if owner.const_defined?(:MemorexMethods, false)
@@ -18,6 +19,8 @@ module Memorex
     end
 
     # Determine the visibility of a method
+    # @param owner [Module]
+    # @param method_name [Symbol]
     # @return [Symbol]
     def self.visibility(owner, method_name)
       if owner.private_method_defined?(method_name)
@@ -32,6 +35,8 @@ module Memorex
     end
 
     # Determine if a method is defined (including private methods)
+    # @param owner [Module]
+    # @param method_name [Symbol]
     # @return [Boolean]
     def self.method_defined?(owner, method_name)
       owner.method_defined?(method_name) || owner.private_method_defined?(method_name)
