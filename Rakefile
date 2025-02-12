@@ -4,6 +4,8 @@ require "bundler/gem_tasks"
 require "standard/rake"
 require "rspec/core/rake_task"
 
+CLOBBER.include("rbi", "sig", ".yardoc")
+
 RSpec::Core::RakeTask.new(:spec)
 
 desc "Generate type defininitions from YARD"
@@ -15,4 +17,5 @@ task :sord do
   sh "bundle exec sord sig/memorex.rbs"
 end
 
+task(:build).enhance([:sord])
 task default: [:standard, :spec]
