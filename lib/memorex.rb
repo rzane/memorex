@@ -6,6 +6,10 @@ module Memorex
   def memoize(method_name)
     @_memorex_methods ||= Module.new.tap { |mod| prepend(mod) }
 
+    if @_memorex_methods.method_defined?(method_name)
+      raise ArgumentError, "`#{method_name.inspect}` is already memoized"
+    end
+
     visibility = if private_method_defined?(method_name)
       :private
     elsif protected_method_defined?(method_name)

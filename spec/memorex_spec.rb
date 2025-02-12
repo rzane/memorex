@@ -92,7 +92,7 @@ RSpec.describe Memorex do
     expect(subject.value).to be(subject.value)
   end
 
-  it 'memoizes through inclusion' do
+  it 'memoizes a method defined in an included module' do
     parent = Module.new do
       extend Memorex
       memoize def value = Once.assert(:value)
@@ -102,7 +102,7 @@ RSpec.describe Memorex do
     expect(subject.value).to be(subject.value)
   end
 
-  it 'memoizes through concern' do
+  it 'memoizes a method defined in an included concern' do
     parent = Module.new do
       extend ActiveSupport::Concern
       extend Memorex
@@ -126,7 +126,7 @@ RSpec.describe Memorex do
     expect(subject.value).to be(subject.value)
   end
 
-  it 'memoizes an instance method with a Sorbet signature in a concern' do
+  it 'memoizes an instance method with a Sorbet signature in an included concern' do
     parent = Module.new do
       extend ActiveSupport::Concern
       extend T::Sig
@@ -138,5 +138,27 @@ RSpec.describe Memorex do
 
     subject = Class.new { include parent }.new
     expect(subject.value).to be(subject.value)
+  end
+
+  it 'raises an exception when the method is already memoized' do
+    subject = Class.new do
+      extend Memorex
+      memoize def value = Once.assert(:value)
+    end
+
+    expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is already memoized")
+  end
+
+  it 'does not memoize an overridden method that is not also memoized' do
+    parent = Class.new do
+      extend Memorex
+      memoize def value = raise('This should not be called')
+    end
+
+    subject = Class.new(parent) do
+      def value = SecureRandom.uuid
+    end.new
+
+    expect(subject.value).not_to eq(subject.value)
   end
 end
