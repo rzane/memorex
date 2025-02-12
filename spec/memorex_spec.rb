@@ -140,6 +140,11 @@ RSpec.describe Memorex do
     expect(subject.value).to be(subject.value)
   end
 
+  it 'raises an exception at when memoizing an undefined method' do
+    subject = Class.new { extend Memorex }
+    expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is not a method")
+  end
+
   it 'raises an exception when the method is already memoized' do
     subject = Class.new do
       extend Memorex

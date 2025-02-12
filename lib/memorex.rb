@@ -14,8 +14,10 @@ module Memorex
       :private
     elsif protected_method_defined?(method_name)
       :protected
-    else
+    elsif public_method_defined?(method_name)
       :public
+    else
+      raise ArgumentError, "`#{method_name.inspect}` is not a method"
     end
 
     @_memorex_methods.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
