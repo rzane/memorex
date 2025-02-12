@@ -9,3 +9,7 @@ gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 gem "sorbet-runtime"
 gem "activesupport"
+
+gem "benchmark-ips"
+gem "memo_wise"
+gem "memoist"
