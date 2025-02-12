@@ -6,14 +6,14 @@ module Memorex
   class Memory
     # Create a new instance of {Memory}
     # @api private
-    # @param memory [Hash] the memoization cache
+    # @param memory [Hash<Symbol, BasicObject>] the memoization cache
     def initialize(memory)
       @memory = memory
     end
 
     # Add values to the cache
     # @api public
-    # @param values [Hash] the values to add to the cache.
+    # @param values [Hash<Symbol, BasicObject>] the values to add to the cache.
     # @return [self]
     # @example
     #   memorex.merge!(foo: "bar")
