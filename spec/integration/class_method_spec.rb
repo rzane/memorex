@@ -12,6 +12,18 @@ RSpec.describe 'scenario: class method' do
     expect(subject.value).to be(subject.value)
   end
 
+  it 'memoizes a class method when the class is frozen' do
+    subject = Class.new do
+      class << self
+        extend Memorex
+        memoize def value = Once.assert(:value)
+      end
+    end
+
+    subject.freeze
+    expect(subject.value).to be(subject.value)
+  end
+
   it 'preserves the visiblity of a private class method' do
     subject = Class.new do
       class << self
