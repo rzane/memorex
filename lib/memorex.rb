@@ -48,11 +48,7 @@ module Memorex
         raise ArgumentError, "unsupported block argument" if block_given?
 
         cache = (@_memorex_cache ||= {})
-        value = cache[:#{method_name}]
-
-        if value || cache.key?(:#{method_name})
-          value
-        else
+        cache.fetch(:#{method_name}) do
           cache[:#{method_name}] = super()
         end
       end
