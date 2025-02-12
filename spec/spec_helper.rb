@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require "active_support/concern"
 require "memorex"
 require "securerandom"
+require "sorbet-runtime"
 
 module Once
   def self.calls
