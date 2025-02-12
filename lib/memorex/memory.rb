@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Memorex
+  # This class is used to interact with the memoization cache.
+  # @api public
   class Memory
     # Create a new instance of {Memory}
     # @api private
@@ -12,7 +14,7 @@ module Memorex
     # Add values to the cache
     # @api public
     # @param values [Hash] the values to add to the cache.
-    # @return [Memory]
+    # @return [self]
     # @example
     #   memorex.merge!(foo: "bar")
     def merge!(values)
@@ -22,7 +24,7 @@ module Memorex
 
     # Reset the cache
     # @api public
-    # @return [Memory]
+    # @return [self]
     # @example
     #   memorex.clear
     def clear
@@ -33,7 +35,7 @@ module Memorex
     # Delete a key from the cache
     # @api public
     # @param key [Symbol]
-    # @return [Memory]
+    # @return [self]
     # @example
     #   memorex.delete(:foo)
     def delete(key)
