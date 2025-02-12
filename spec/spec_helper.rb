@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 require "memorex"
+require "securerandom"
+
+module Once
+  def self.calls
+    @calls ||= Set.new
+  end
+
+  def self.assert(name)
+    if calls.add?(name)
+      SecureRandom.uuid
+    else
+      raise "#{name} was already called"
+    end
+  end
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -11,5 +26,9 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before(:each) do
+    Once.calls.clear
   end
 end
