@@ -174,6 +174,15 @@ RSpec.describe Memorex do
     expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is already memoized")
   end
 
+  it 'raises an exception when a block argument is provided' do
+    subject = Class.new do
+      extend Memorex
+      memoize def value = Once.assert(:value)
+    end.new
+
+    expect { subject.value {} }.to raise_error(ArgumentError, "unsupported block argument")
+  end
+
   it 'does not memoize an overridden method that is not also memoized' do
     parent = Class.new do
       extend Memorex

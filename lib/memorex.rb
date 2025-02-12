@@ -22,6 +22,8 @@ module Memorex
 
     @_memorex_methods.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
       #{visibility} def #{method_name}
+        raise ArgumentError, "unsupported block argument" if block_given?
+
         cache = (@_memorex_cache ||= {})
         cache.fetch(:#{method_name}) { cache[:#{method_name}] = super() }
       end
