@@ -186,4 +186,17 @@ RSpec.describe Memorex do
 
     expect(subject.value).not_to eq(subject.value)
   end
+
+  it 'does not memoize an overridden method that invokes super' do
+    parent = Class.new do
+      extend Memorex
+      memoize def value = Once.assert(:value)
+    end
+
+    subject = Class.new(parent) do
+      def value = super()
+    end.new
+
+    expect(subject.value).to be(subject.value)
+  end
 end
