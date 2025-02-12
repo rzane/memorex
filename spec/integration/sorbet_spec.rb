@@ -26,4 +26,16 @@ RSpec.describe "scenario: sorbet" do
     subject = Class.new { include parent }.new
     expect(subject.value).to be(subject.value)
   end
+
+  it "raises type errors" do
+    subject = Class.new do
+      extend Memorex
+      extend T::Sig
+
+      sig { returns(String) }
+      memoize def value = 42
+    end.new
+
+    expect { subject.value }.to raise_error(TypeError)
+  end
 end
