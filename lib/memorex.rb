@@ -63,7 +63,13 @@ module Memorex
   # This method allows you to force that module to be defined and prepended, which is
   # useful when order matters.
   #
+  # @api public
   # @return [Module]
+  # @example
+  #   class Foo
+  #     extend Memorex
+  #     prepend_memorex
+  #   end
   def prepend_memorex
     if const_defined?(:MemorexMethods, false)
       const_get(:MemorexMethods, false)

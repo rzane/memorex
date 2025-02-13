@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    memorex (0.2.0)
+    memorex (0.3.0)
 
 GEM
   remote: https://rubygems.org/
