@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe "scenario: errors" do
+  it "raises an exception when Memorex is used twice" do
+    subject = Class.new { extend Memorex }
+    stub_const("Foo", subject)
+
+    expect { subject.extend(Memorex) }.to raise_error(ArgumentError, "`Foo` extended Memorex more than once")
+  end
+
   it "raises an exception at when memoizing an undefined method" do
     subject = Class.new { extend Memorex }
     expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is not defined")

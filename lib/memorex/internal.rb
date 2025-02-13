@@ -4,18 +4,22 @@ module Memorex
   # These methods are use internally by Memorex and are not intended for public use.
   # @api private
   module Internal
-    # Retrieve or define a module named MemorexMethods
+    # Define MemorexMethods
     # @param owner [Module]
     # @return [Module]
-    def self.methods_module(owner)
+    def self.define_methods(owner)
       if owner.const_defined?(:MemorexMethods, false)
-        owner.const_get(:MemorexMethods, false)
-      else
-        Methods.clone.tap do |mod|
-          owner.const_set(:MemorexMethods, mod)
-          owner.prepend(mod)
-        end
+        raise ArgumentError, "`#{owner}` extended Memorex more than once"
       end
+
+      owner.const_set(:MemorexMethods, Module.new)
+    end
+
+    # Retreive MemorexMethods
+    # @param owner [Module]
+    # @return [Module]
+    def self.lookup_methods(owner)
+      owner.const_get(:MemorexMethods, false)
     end
 
     # Determine the visibility of a method

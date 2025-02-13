@@ -6,8 +6,20 @@ require_relative "memorex/version"
 
 # Memorex provides a simple way to memoize methods in Ruby.
 module Memorex
+  # @api private
+  # @param base [Module]
+  # @return [void]
   def self.extended(base)
-    Internal.methods_module(base)
+    base.prepend(Initializer)
+    base.prepend(Internal.define_methods(base))
+  end
+
+  # @api private
+  # @param base [Module]
+  # @return [void]
+  def inherited(base)
+    super
+    base.prepend(Internal.define_methods(base))
   end
 
   # Convert a method to a memoized method
@@ -30,8 +42,8 @@ module Memorex
   #   end
   #
   def memoize(method_name)
+    methods = Internal.lookup_methods(self)
     visibility = Internal.visibility(self, method_name)
-    methods = Internal.methods_module(self)
 
     if Internal.method_defined?(methods, method_name)
       raise ArgumentError, "`#{method_name.inspect}` is already memoized"
@@ -51,9 +63,9 @@ module Memorex
     method_name
   end
 
-  # A clone of this module will be prepended to the class that invoked `memoize`.
+  # This module eagerly initializes Memorex's cache.
   # @api private
-  module Methods
+  module Initializer
     # This is a best effort attempt to initialize the cache at initialization time
     #
     # Since the cache would otherwise be assigned lazily, this decreases the risk

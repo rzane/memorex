@@ -78,9 +78,6 @@ RSpec.describe "scenario: inheritance" do
       def bar = Once.assert(:bar)
     end
 
-    expect(child::MemorexMethods).to be(parent::MemorexMethods)
-
-    child.memoize(:bar)
     expect(child::MemorexMethods).not_to be(parent::MemorexMethods)
   end
 
