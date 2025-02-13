@@ -6,6 +6,14 @@ require_relative "memorex/version"
 
 # Memorex provides a simple way to memoize methods in Ruby.
 module Memorex
+  # Called when Memorex is extended
+  # @api private
+  # @param base [Module]
+  # @return [void]
+  def self.extended(base)
+    base.prepend(Initializer)
+  end
+
   # Convert a method to a memoized method
   #
   # Memorex does not support memoizing methods that accept arguments.
@@ -47,9 +55,9 @@ module Memorex
     method_name
   end
 
-  # A clone of this module will be prepended to the class that invoked `memoize`.
+  # This module is responsible for initializing the cache
   # @api private
-  module Methods
+  module Initializer
     # This is a best effort attempt to initialize the cache at initialization time
     #
     # Since the cache would otherwise be assigned lazily, this decreases the risk
