@@ -56,7 +56,7 @@ module Memorex
     # of two threads trying to lazily initialize the cache at the same time.
     #
     # @return [void]
-    def initialize(*, **)
+    def initialize(...)
       @_memorex_cache = {}
       super
     end
