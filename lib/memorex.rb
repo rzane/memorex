@@ -6,14 +6,6 @@ require_relative "memorex/version"
 
 # Memorex provides a simple way to memoize methods in Ruby.
 module Memorex
-  # Called when Memorex is extended
-  # @api private
-  # @param base [Module]
-  # @return [void]
-  def self.extended(base)
-    base.prepend(Initializer)
-  end
-
   # Convert a method to a memoized method
   #
   # Memorex does not support memoizing methods that accept arguments.
@@ -71,6 +63,8 @@ module Memorex
   #     prepend_memorex
   #   end
   def prepend_memorex
+    prepend Initializer
+
     if const_defined?(:MemorexMethods, false)
       const_get(:MemorexMethods, false)
     else
