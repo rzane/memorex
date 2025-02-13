@@ -34,8 +34,8 @@ module Memorex
   #   end
   #
   def memoize(method_name)
+    methods = prepend_memorex
     visibility = Internal.visibility(self, method_name)
-    methods = Internal.methods_module(self)
 
     if Internal.method_defined?(methods, method_name)
       raise ArgumentError, "`#{method_name.inspect}` is already memoized"
@@ -53,6 +53,23 @@ module Memorex
     RUBY
 
     method_name
+  end
+
+  # Define and prepend MemorexMethods
+  #
+  # When {memoize} is called, Memorex will define a module named MemorexMethods. Memoized
+  # methods will be defined on this module and then prepended to the class.
+  #
+  # This method allows you to force that module to be defined and prepended, which is
+  # useful when order matters.
+  #
+  # @return [Module]
+  def prepend_memorex
+    if const_defined?(:MemorexMethods, false)
+      const_get(:MemorexMethods, false)
+    else
+      const_set(:MemorexMethods, Module.new).tap { |mod| prepend(mod) }
+    end
   end
 
   # This module is responsible for initializing the cache
