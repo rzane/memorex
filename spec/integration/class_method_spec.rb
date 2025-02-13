@@ -16,13 +16,9 @@ RSpec.describe "scenario: class method" do
     subject = Class.new do
       class << self
         extend Memorex
-        def value = Once.assert(:value)
       end
     end
 
-    expect(subject.singleton_class.const_defined?(:MemorexMethods)).to be(false)
-
-    subject.singleton_class.memoize(:value)
     expect(subject.singleton_class::MemorexMethods).to be_a(Module)
   end
 

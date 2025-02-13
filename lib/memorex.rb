@@ -6,6 +6,10 @@ require_relative "memorex/version"
 
 # Memorex provides a simple way to memoize methods in Ruby.
 module Memorex
+  def self.extended(base)
+    Internal.methods_module(base)
+  end
+
   # Convert a method to a memoized method
   #
   # Memorex does not support memoizing methods that accept arguments.
