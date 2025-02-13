@@ -75,17 +75,6 @@ module Memorex
   # This module is responsible for initializing the cache
   # @api private
   module Initializer
-    # This is a best effort attempt to initialize the cache at initialization time
-    #
-    # Since the cache would otherwise be assigned lazily, this decreases the risk
-    # of two threads trying to lazily initialize the cache at the same time.
-    #
-    # @return [void]
-    def initialize(...)
-      @_memorex_cache = {}
-      super
-    end
-
     # Eagerly initialize the cache before the object is frozen
     #
     # This ensures that frozen objects can still have memoized methods.
