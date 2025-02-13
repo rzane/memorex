@@ -101,4 +101,21 @@ RSpec.describe "scenario: inheritance" do
     child.memoize(:bar)
     expect(child::MemorexMethods).not_to be(parent::MemorexMethods)
   end
+
+  it "memoizes through inheritance when frozen" do
+    parent = Class.new do
+      class << self
+        extend Memorex
+      end
+    end
+
+    subject = Class.new(parent) do
+      class << self
+        memoize def value = Once.assert(:value)
+      end
+    end
+
+    subject.freeze
+    expect(subject.value).to be(subject.value)
+  end
 end
