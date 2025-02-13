@@ -55,7 +55,7 @@ RSpec.describe "scenario: inheritance" do
     expect(subject.value).not_to eq(subject.value)
   end
 
-  it "does not memoize an overridden method that invokes super" do
+  it "memoizes an overridden method that invokes super" do
     parent = Class.new do
       extend Memorex
       memoize def value = Once.assert(:value)
