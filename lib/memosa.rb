@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative "memorex/cache"
-require_relative "memorex/internal"
-require_relative "memorex/version"
+require_relative "memosa/cache"
+require_relative "memosa/internal"
+require_relative "memosa/version"
 
-# Memorex provides a simple way to memoize methods in Ruby.
-module Memorex
+# Memosa provides a simple way to memoize methods in Ruby.
+module Memosa
   # Convert a method to a memoized method
   #
-  # Memorex does not support memoizing methods that accept arguments.
+  # Memosa does not support memoizing methods that accept arguments.
   #
   # @api public
   # @param method_name [Symbol] the name of the method to memoize
@@ -17,7 +17,7 @@ module Memorex
   # @raise [ArgumentError] when the method is already memoized
   # @example
   #   class State
-  #     extend Memorex
+  #     extend Memosa
   #
   #     memoize def id
   #       SecureRandom.uuid
@@ -25,7 +25,7 @@ module Memorex
   #   end
   #
   def memoize(method_name)
-    methods = prepend_memorex
+    methods = prepend_memosa
     visibility = Internal.visibility(self, method_name)
 
     if Internal.method_defined?(methods, method_name)
@@ -36,7 +36,7 @@ module Memorex
       #{visibility} def #{method_name}
         raise ArgumentError, "unsupported block argument" if block_given?
 
-        cache = (@_memorex_cache ||= {})
+        cache = (@_memosa_cache ||= {})
         cache.fetch(:#{method_name}) do
           cache[:#{method_name}] = super()
         end
@@ -46,9 +46,9 @@ module Memorex
     method_name
   end
 
-  # Define and prepend MemorexMethods
+  # Define and prepend MemosaMethods
   #
-  # When {memoize} is called, Memorex will define a module named MemorexMethods. Memoized
+  # When {memoize} is called, Memosa will define a module named MemosaMethods. Memoized
   # methods will be defined on this module and then prepended to the class.
   #
   # This method allows you to force that module to be defined and prepended, which is
@@ -58,16 +58,16 @@ module Memorex
   # @return [Module]
   # @example
   #   class Foo
-  #     extend Memorex
-  #     prepend_memorex
+  #     extend Memosa
+  #     prepend_memosa
   #   end
-  def prepend_memorex
+  def prepend_memosa
     prepend Initializer
 
-    if const_defined?(:MemorexMethods, false)
-      const_get(:MemorexMethods, false)
+    if const_defined?(:MemosaMethods, false)
+      const_get(:MemosaMethods, false)
     else
-      const_set(:MemorexMethods, Module.new).tap { |mod| prepend(mod) }
+      const_set(:MemosaMethods, Module.new).tap { |mod| prepend(mod) }
     end
   end
 
@@ -77,9 +77,9 @@ module Memorex
   # @param object [Object]
   # @return [void]
   # @example
-  #   Memorex.reset(user)
+  #   Memosa.reset(user)
   def self.reset(object)
-    cache = object.instance_variable_get(:@_memorex_cache)
+    cache = object.instance_variable_get(:@_memosa_cache)
     cache&.clear
     nil
   end
@@ -94,33 +94,33 @@ module Memorex
     #
     # @return [self]
     def freeze
-      @_memorex_cache ||= {}
+      @_memosa_cache ||= {}
       super
     end
   end
 
-  # This module provides a {#memorex} helper that can be used to manipulate the
+  # This module provides a {#memosa} helper that can be used to manipulate the
   # memoization cache directly.
   module API
     # Used to manipulate the memoized cache directly
     #
     # @api public
-    # @return [Memorex::Cache]
+    # @return [Memosa::Cache]
     # @example
     #   class State
-    #     extend Memorex
-    #     include Memorex::API
+    #     extend Memosa
+    #     include Memosa::API
     #
     #     memoize def id
     #       SecureRandom.uuid
     #     end
     #
     #     def reset!
-    #       memorex.clear
+    #       memosa.clear
     #     end
     #   end
-    def memorex
-      ::Memorex::Cache.new(@_memorex_cache ||= {})
+    def memosa
+      ::Memosa::Cache.new(@_memosa_cache ||= {})
     end
   end
 end

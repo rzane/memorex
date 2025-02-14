@@ -3,29 +3,29 @@
 RSpec.describe "scenario: instance method" do
   it "memoizes an instance method" do
     subject = Class.new do
-      extend Memorex
+      extend Memosa
       memoize def value = Counter.once(:value)
     end.new
 
     expect(subject.value).to be(subject.value)
   end
 
-  it "defines MemorexMethods" do
+  it "defines MemosaMethods" do
     subject = Class.new do
-      extend Memorex
+      extend Memosa
       def value = Counter.once(:value)
     end
 
-    expect(subject.const_defined?(:MemorexMethods)).to be(false)
+    expect(subject.const_defined?(:MemosaMethods)).to be(false)
 
     subject.memoize(:value)
-    expect(subject::MemorexMethods).to be_a(Module)
-    expect(subject.ancestors).to include(subject::MemorexMethods)
+    expect(subject::MemosaMethods).to be_a(Module)
+    expect(subject.ancestors).to include(subject::MemosaMethods)
   end
 
   it "memoizes an instance method when the object is frozen" do
     subject = Class.new do
-      extend Memorex
+      extend Memosa
       memoize def value = Counter.once(:value)
     end.new
 
@@ -35,7 +35,7 @@ RSpec.describe "scenario: instance method" do
 
   it "preserves the visiblity of a private instance method" do
     subject = Class.new do
-      extend Memorex
+      extend Memosa
 
       private
 
@@ -48,7 +48,7 @@ RSpec.describe "scenario: instance method" do
 
   it "preserves the visibility of a protected instance method" do
     subject = Class.new do
-      extend Memorex
+      extend Memosa
 
       protected
 

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "rubocop/cop/memorex"
+require "rubocop/cop/memosa"
 require "rubocop/rspec/support"
 
-RSpec.describe RuboCop::Cop::Memorex, :config do
-  describe RuboCop::Cop::Memorex::MethodDefinition do
+RSpec.describe RuboCop::Cop::Memosa, :config do
+  describe RuboCop::Cop::Memosa::MethodDefinition do
     it "reports a violation when a symbol is provided" do
       expect_offense(<<~RUBY)
         memoize :foo
@@ -19,7 +19,7 @@ RSpec.describe RuboCop::Cop::Memorex, :config do
     end
   end
 
-  describe RuboCop::Cop::Memorex::MethodSignature do
+  describe RuboCop::Cop::Memosa::MethodSignature do
     it "reports a violation when a method accepts arguments" do
       expect_offense(<<~RUBY)
         memoize def foo(a); end

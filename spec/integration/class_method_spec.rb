@@ -4,7 +4,7 @@ RSpec.describe "scenario: class method" do
   it "memoizes a class method" do
     subject = Class.new do
       class << self
-        extend Memorex
+        extend Memosa
         memoize def value = Counter.once(:value)
       end
     end
@@ -12,24 +12,24 @@ RSpec.describe "scenario: class method" do
     expect(subject.value).to be(subject.value)
   end
 
-  it "defines MemorexMethods" do
+  it "defines MemosaMethods" do
     subject = Class.new do
       class << self
-        extend Memorex
+        extend Memosa
         def value = Counter.once(:value)
       end
     end
 
-    expect(subject.singleton_class.const_defined?(:MemorexMethods)).to be(false)
+    expect(subject.singleton_class.const_defined?(:MemosaMethods)).to be(false)
 
     subject.singleton_class.memoize(:value)
-    expect(subject.singleton_class::MemorexMethods).to be_a(Module)
+    expect(subject.singleton_class::MemosaMethods).to be_a(Module)
   end
 
   it "memoizes a class method when the class is frozen" do
     subject = Class.new do
       class << self
-        extend Memorex
+        extend Memosa
         memoize def value = Counter.once(:value)
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe "scenario: class method" do
   it "preserves the visiblity of a private class method" do
     subject = Class.new do
       class << self
-        extend Memorex
+        extend Memosa
 
         private
 
@@ -56,7 +56,7 @@ RSpec.describe "scenario: class method" do
   it "preserves the visibility of a protected class method" do
     subject = Class.new do
       class << self
-        extend Memorex
+        extend Memosa
 
         protected
 

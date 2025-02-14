@@ -1,10 +1,10 @@
 require:
-  - rubocop/cop/memorex
+  - rubocop/cop/memosa
 
-Memorex/MethodDefinition:
+Memosa/MethodDefinition:
   Description: "Disallows the use of `memoize` without a method definition"
   Enabled: true
 
-Memorex/MethodSignature:
+Memosa/MethodSignature:
   Description: "Disallows the use of `memoize` for methods that accept arguments"
   Enabled: true

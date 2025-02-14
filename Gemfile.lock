@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    memorex (0.7.0)
+    memosa (0.8.1)
 
 GEM
   remote: https://rubygems.org/
@@ -123,7 +123,7 @@ DEPENDENCIES
   benchmark-ips
   memo_wise
   memoist
-  memorex!
+  memosa!
   rake
   rspec
   sorbet-runtime

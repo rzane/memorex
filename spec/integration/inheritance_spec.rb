@@ -3,7 +3,7 @@
 RSpec.describe "scenario: inheritance" do
   it "memoizes through inheritance" do
     parent = Class.new do
-      extend Memorex
+      extend Memosa
       memoize def value = Counter.once(:value)
     end
 
@@ -11,8 +11,8 @@ RSpec.describe "scenario: inheritance" do
     expect(subject.value).to be(subject.value)
   end
 
-  it "memoizes when the parent extends Memorex" do
-    parent = Class.new { extend Memorex }
+  it "memoizes when the parent extends Memosa" do
+    parent = Class.new { extend Memosa }
     subject = Class.new(parent) do
       memoize def value = Counter.once(:value)
     end.new
@@ -22,7 +22,7 @@ RSpec.describe "scenario: inheritance" do
 
   it "memoizes a method defined in an included module" do
     parent = Module.new do
-      extend Memorex
+      extend Memosa
       memoize def value = Counter.once(:value)
     end
 
@@ -33,7 +33,7 @@ RSpec.describe "scenario: inheritance" do
   it "memoizes a method defined in an included concern" do
     parent = Module.new do
       extend ActiveSupport::Concern
-      extend Memorex
+      extend Memosa
 
       memoize def value = Counter.once(:value)
     end
@@ -44,7 +44,7 @@ RSpec.describe "scenario: inheritance" do
 
   it "does not memoize an overridden method that is not also memoized" do
     parent = Class.new do
-      extend Memorex
+      extend Memosa
       memoize def value = raise("This should not be called")
     end
 
@@ -57,7 +57,7 @@ RSpec.describe "scenario: inheritance" do
 
   it "memoizes an overridden method that invokes super" do
     parent = Class.new do
-      extend Memorex
+      extend Memosa
       memoize def value = Counter.once(:value)
     end
 
@@ -68,9 +68,9 @@ RSpec.describe "scenario: inheritance" do
     expect(subject.value).to be(subject.value)
   end
 
-  it "does not inherit MemorexMethods module" do
+  it "does not inherit MemosaMethods module" do
     parent = Class.new do
-      extend Memorex
+      extend Memosa
       memoize def foo = Counter.once(:foo)
     end
 
@@ -78,34 +78,34 @@ RSpec.describe "scenario: inheritance" do
       def bar = Counter.once(:bar)
     end
 
-    expect(child::MemorexMethods).to be(parent::MemorexMethods)
+    expect(child::MemosaMethods).to be(parent::MemosaMethods)
 
     child.memoize(:bar)
-    expect(child::MemorexMethods).not_to be(parent::MemorexMethods)
+    expect(child::MemosaMethods).not_to be(parent::MemosaMethods)
   end
 
-  it "does not inherit MemorexMethods module from included module" do
+  it "does not inherit MemosaMethods module from included module" do
     parent = Module.new do
-      extend Memorex
+      extend Memosa
       memoize def foo = Counter.once(:foo)
     end
 
     child = Class.new do
-      extend Memorex
+      extend Memosa
       include parent
       def bar = Counter.once(:bar)
     end
 
-    expect(child::MemorexMethods).to be(parent::MemorexMethods)
+    expect(child::MemosaMethods).to be(parent::MemosaMethods)
 
     child.memoize(:bar)
-    expect(child::MemorexMethods).not_to be(parent::MemorexMethods)
+    expect(child::MemosaMethods).not_to be(parent::MemosaMethods)
   end
 
   it "memoizes through inheritance when frozen" do
     parent = Class.new do
       class << self
-        extend Memorex
+        extend Memosa
       end
     end
 

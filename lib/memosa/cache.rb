@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Memorex
+module Memosa
   # This class is used to interact with the memoization cache.
   # @api public
   class Cache
@@ -18,7 +18,7 @@ module Memorex
     # @param values [Hash<Symbol, BasicObject>] the values to add to the cache.
     # @return [self]
     # @example
-    #   memorex.merge!(foo: "bar")
+    #   memosa.merge!(foo: "bar")
     def merge!(values)
       @cache.merge!(values)
       self
@@ -29,7 +29,7 @@ module Memorex
     # @api public
     # @return [self]
     # @example
-    #   memorex.clear
+    #   memosa.clear
     def clear
       @cache.clear
       self
@@ -41,7 +41,7 @@ module Memorex
     # @param key [Symbol]
     # @return [self]
     # @example
-    #   memorex.delete(:foo)
+    #   memosa.delete(:foo)
     def delete(key)
       @cache.delete(key)
       self

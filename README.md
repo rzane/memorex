@@ -1,8 +1,8 @@
-# Memorex 🦖
+# Memosa 🧠
 
-Memorex is a simple solution for caching method return values in Ruby.
+Memosa is a simple solution for caching method return values in Ruby.
 
-Memorex is designed with the following features in mind:
+Memosa is designed with the following features in mind:
 
 * Fully compatible with Sorbet.
 * Support for memoizing methods on frozen objects.
@@ -16,23 +16,23 @@ Memorex is designed with the following features in mind:
 
 ## Documentation
 
-[Click here to read the documentation.](https://rubydoc.info/gems/memorex/Memorex)
+[Click here to read the documentation.](https://rubydoc.info/gems/memosa/Memosa)
 
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add memorex
+bundle add memosa
 ```
 
 ## Usage
 
-To memoize a method, simply extend the class with `Memorex` and use the `memoize` decorator.
+To memoize a method, simply extend the class with `Memosa` and use the `memoize` decorator.
 
 ```ruby
 class User
-  extend Memorex
+  extend Memosa
 
   memoize def id
     SecureRandom.uuid
@@ -44,12 +44,12 @@ user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
 user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
 ```
 
-Memorex can also memoize class methods:
+Memosa can also memoize class methods:
 
 ```ruby
 class Configuration
   class << self
-    extend Memorex
+    extend Memosa
 
     memoize def instance
       new(YAML.load_file("config.yml"))
@@ -58,46 +58,46 @@ class Configuration
 end
 ```
 
-### `Memorex::API`
+### `Memosa::API`
 
-To access the cache directly, include `Memorex::API`.
+To access the cache directly, include `Memosa::API`.
 
 ```ruby
 class User
-  extend Memorex
-  include Memorex::API
+  extend Memosa
+  include Memosa::API
   # ... etc ...
 end
 
 user = User.new
-user.memorex # => #<Memorex::Cache>
+user.memosa # => #<Memosa::Cache>
 
-user.memorex.merge!(id: SecureRandom.id)
-user.memorex.delete(:id)
-user.memorex.clear
+user.memosa.merge!(id: SecureRandom.id)
+user.memosa.delete(:id)
+user.memosa.clear
 ```
 
-### `Memorex.reset`
+### `Memosa.reset`
 
-Memorex provides a `reset` method for resetting the cache, but `Memorex::API#clear` should be preferred.
+Memosa provides a `reset` method for resetting the cache, but `Memosa::API#clear` should be preferred.
 
 ```ruby
 user = User.new
 user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
 
-Memorex.reset(user)
+Memosa.reset(user)
 user.id # => "4690993f-408f-4b7a-824b-c6776782b2fd"
 ```
 
 ## RuboCop
 
-Memorex provides some RuboCop rules to ensure that you're using it correctly.
+Memosa provides some RuboCop rules to ensure that you're using it correctly.
 
 Add the following configuration to your `.rubocop.yml` file:
 
 ```yaml
 inherit_gem:
-  memorex: config/rubocop.yml
+  memosa: config/rubocop.yml
 ```
 
 ## Development
@@ -108,4 +108,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/rzane/memorex.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rzane/memosa.
