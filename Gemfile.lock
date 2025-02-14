@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    memorex (0.5.0)
+    memorex (0.5.1)
 
 GEM
   remote: https://rubygems.org/
@@ -118,7 +118,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  abbrev (~> 0.1.2)
+  abbrev
   activesupport
   benchmark-ips
   memo_wise
