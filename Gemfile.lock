@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    memox (0.8.0)
+    memox (0.8.1)
 
 GEM
   remote: https://rubygems.org/
