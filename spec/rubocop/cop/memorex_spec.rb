@@ -23,21 +23,21 @@ RSpec.describe RuboCop::Cop::Memorex, :config do
     it "reports a violation when a method accepts arguments" do
       expect_offense(<<~RUBY)
         memoize def foo(a); end
-        ^^^^^^^ Memoized methods should not accept arguments
+        ^^^^^^^ Memoized methods should not accept arguments or yield
       RUBY
     end
 
     it "reports a violation when a method accepts a block" do
       expect_offense(<<~RUBY)
         memoize def foo(&block); end
-        ^^^^^^^ Memoized methods should not accept arguments
+        ^^^^^^^ Memoized methods should not accept arguments or yield
       RUBY
     end
 
     it "reports a violation when a method accepts an implicit block" do
       expect_offense(<<~RUBY)
         memoize def foo
-        ^^^^^^^ Memoized methods should not accept arguments
+        ^^^^^^^ Memoized methods should not accept arguments or yield
           100.times { yield 5 }
         end
       RUBY

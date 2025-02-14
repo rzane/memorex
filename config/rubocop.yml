@@ -1,3 +1,6 @@
+require:
+  - rubocop/cop/memorex
+
 Memorex/MethodDefinition:
   Description: "Disallows the use of `memoize` without a method definition"
   Enabled: true

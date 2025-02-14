@@ -18,7 +18,7 @@ module RuboCop
       end
 
       class MethodSignature < RuboCop::Cop::Base
-        MSG = "Memoized methods should not accept arguments"
+        MSG = "Memoized methods should not accept arguments or yield"
 
         def_node_matcher :invalid_signature?, <<~PATTERN
           (send nil? :memoize {(def _name (args _+) _body) | (def _name _args `yield)})
