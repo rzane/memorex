@@ -86,6 +86,17 @@ Memorex.reset(user)
 user.id # => "4690993f-408f-4b7a-824b-c6776782b2fd"
 ```
 
+## RuboCop
+
+Memorex provides some RuboCop rules to ensure that you're using it correctly.
+
+Add the following configuration to your `.rubocop.yml` file:
+
+```yaml
+inherit_gem:
+  memorex: config/rubocop.yml
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
