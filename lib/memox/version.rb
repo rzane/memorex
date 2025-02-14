@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Memorex
-  # The current Memorex version
+module Memox
+  # The current Memox version
   # @return [String]
   VERSION = "0.7.0"
 end

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require_relative "lib/memorex/version"
+require_relative "lib/memox/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "memorex"
-  spec.version = Memorex::VERSION
+  spec.name = "memox"
+  spec.version = Memox::VERSION
   spec.authors = ["Ray Zane"]
   spec.email = ["raymondzane@gmail.com"]
 
   spec.summary = "A brutally simple macro for memoizing methods."
-  spec.homepage = "https://github.com/rzane/memorex"
+  spec.homepage = "https://github.com/rzane/memox"
   spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"

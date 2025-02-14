@@ -4,16 +4,16 @@ require "rubocop"
 
 module RuboCop
   module Cop
-    # Memorex includes a set of RuboCop rules that encourage best practices when using
-    # memorex.
+    # Memox includes a set of RuboCop rules that encourage best practices when using
+    # memox.
     #
     # Add the following configuration to your `.rubocop.yml`:
     #
     # @example
     #   inherit_gem:
-    #     memorex: config/rubocop.yml
+    #     memox: config/rubocop.yml
     #
-    module Memorex
+    module Memox
       # This cop checks for memoized methods that accept arguments or yield.
       #
       # @example

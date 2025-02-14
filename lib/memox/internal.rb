@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Memorex
-  # These methods are use internally by Memorex and are not intended for public use.
+module Memox
+  # These methods are use internally by Memox and are not intended for public use.
   # @!visibility private
   module Internal
     # Determine the visibility of a method

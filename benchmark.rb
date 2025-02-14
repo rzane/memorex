@@ -2,7 +2,7 @@ require "bundler/inline"
 require "benchmark/ips"
 require "memo_wise"
 require "memoist"
-require "memorex"
+require "memox"
 
 strategies = {
   "Control" => Class.new {
@@ -10,8 +10,8 @@ strategies = {
       @value ||= 100
     end
   },
-  "Memorex" => Class.new {
-    extend Memorex
+  "Memox" => Class.new {
+    extend Memox
     memoize def value = 100
   },
   "Memoist" => Class.new {

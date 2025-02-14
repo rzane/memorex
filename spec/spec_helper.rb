@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/concern"
-require "memorex"
+require "memox"
 require "securerandom"
 require "sorbet-runtime"
 

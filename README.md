@@ -1,8 +1,8 @@
-# Memorex 🦖
+# Memox 🧠
 
-Memorex is a simple solution for caching method return values in Ruby.
+Memox is a simple solution for caching method return values in Ruby.
 
-Memorex is designed with the following features in mind:
+Memox is designed with the following features in mind:
 
 * Fully compatible with Sorbet.
 * Support for memoizing methods on frozen objects.
@@ -16,23 +16,23 @@ Memorex is designed with the following features in mind:
 
 ## Documentation
 
-[Click here to read the documentation.](https://rubydoc.info/gems/memorex/Memorex)
+[Click here to read the documentation.](https://rubydoc.info/gems/memox/Memox)
 
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add memorex
+bundle add memox
 ```
 
 ## Usage
 
-To memoize a method, simply extend the class with `Memorex` and use the `memoize` decorator.
+To memoize a method, simply extend the class with `Memox` and use the `memoize` decorator.
 
 ```ruby
 class User
-  extend Memorex
+  extend Memox
 
   memoize def id
     SecureRandom.uuid
@@ -44,12 +44,12 @@ user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
 user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
 ```
 
-Memorex can also memoize class methods:
+Memox can also memoize class methods:
 
 ```ruby
 class Configuration
   class << self
-    extend Memorex
+    extend Memox
 
     memoize def instance
       new(YAML.load_file("config.yml"))
@@ -58,46 +58,46 @@ class Configuration
 end
 ```
 
-### `Memorex::API`
+### `Memox::API`
 
-To access the cache directly, include `Memorex::API`.
+To access the cache directly, include `Memox::API`.
 
 ```ruby
 class User
-  extend Memorex
-  include Memorex::API
+  extend Memox
+  include Memox::API
   # ... etc ...
 end
 
 user = User.new
-user.memorex # => #<Memorex::Cache>
+user.memox # => #<Memox::Cache>
 
-user.memorex.merge!(id: SecureRandom.id)
-user.memorex.delete(:id)
-user.memorex.clear
+user.memox.merge!(id: SecureRandom.id)
+user.memox.delete(:id)
+user.memox.clear
 ```
 
-### `Memorex.reset`
+### `Memox.reset`
 
-Memorex provides a `reset` method for resetting the cache, but `Memorex::API#clear` should be preferred.
+Memox provides a `reset` method for resetting the cache, but `Memox::API#clear` should be preferred.
 
 ```ruby
 user = User.new
 user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
 
-Memorex.reset(user)
+Memox.reset(user)
 user.id # => "4690993f-408f-4b7a-824b-c6776782b2fd"
 ```
 
 ## RuboCop
 
-Memorex provides some RuboCop rules to ensure that you're using it correctly.
+Memox provides some RuboCop rules to ensure that you're using it correctly.
 
 Add the following configuration to your `.rubocop.yml` file:
 
 ```yaml
 inherit_gem:
-  memorex: config/rubocop.yml
+  memox: config/rubocop.yml
 ```
 
 ## Development
@@ -108,4 +108,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/rzane/memorex.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rzane/memox.

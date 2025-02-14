@@ -3,7 +3,7 @@
 RSpec.describe "scenario: sorbet" do
   it "memoizes an instance method with a Sorbet signature" do
     subject = Class.new do
-      extend Memorex
+      extend Memox
       extend T::Sig
 
       sig { returns(Integer) }
@@ -17,7 +17,7 @@ RSpec.describe "scenario: sorbet" do
     parent = Module.new do
       extend ActiveSupport::Concern
       extend T::Sig
-      extend Memorex
+      extend Memox
 
       sig { returns(Integer) }
       memoize def value = Counter.once(:value)
@@ -29,7 +29,7 @@ RSpec.describe "scenario: sorbet" do
 
   it "raises type errors" do
     subject = Class.new do
-      extend Memorex
+      extend Memox
       extend T::Sig
 
       sig { returns(String) }
@@ -42,7 +42,7 @@ RSpec.describe "scenario: sorbet" do
   it "does not raise when `#initialize` is defined" do
     subject = Class.new do
       extend T::Sig
-      extend Memorex
+      extend Memox
 
       # Ideally, this would eagerly instantiate the cache in `#initialize`.
       # Sorbet won't let us prepend methods before the sig is added.
@@ -51,7 +51,7 @@ RSpec.describe "scenario: sorbet" do
       # Options:
       # 1. Override `.new` and instantiate the cache there
       # 2. Tap into `method_added`, undefine `#initialize` and redefine it after the sig is added
-      prepend_memorex
+      prepend_memox
 
       sig { void }
       def initialize

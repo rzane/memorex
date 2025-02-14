@@ -2,13 +2,13 @@
 
 RSpec.describe "scenario: errors" do
   it "raises an exception at when memoizing an undefined method" do
-    subject = Class.new { extend Memorex }
+    subject = Class.new { extend Memox }
     expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is not defined")
   end
 
   it "raises an exception when a public method is already memoized" do
     subject = Class.new do
-      extend Memorex
+      extend Memox
       memoize def value = Counter.once(:value)
     end
 
@@ -17,7 +17,7 @@ RSpec.describe "scenario: errors" do
 
   it "raises an exception when a private method is already memoized" do
     subject = Class.new do
-      extend Memorex
+      extend Memox
 
       private
 
@@ -29,7 +29,7 @@ RSpec.describe "scenario: errors" do
 
   it "raises an exception when a protected method is already memoized" do
     subject = Class.new do
-      extend Memorex
+      extend Memox
 
       protected
 
@@ -41,7 +41,7 @@ RSpec.describe "scenario: errors" do
 
   it "raises an exception when a block argument is provided" do
     subject = Class.new do
-      extend Memorex
+      extend Memox
       memoize def value = Counter.once(:value)
     end.new
 

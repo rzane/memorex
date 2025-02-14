@@ -16,10 +16,10 @@ end
 desc "Generate type defininitions from YARD"
 task :sord do
   mkdir_p "rbi"
-  sh "bundle exec sord rbi/memorex.rbi --hide-private"
+  sh "bundle exec sord rbi/memox.rbi --hide-private"
 
   mkdir_p "sig"
-  sh "bundle exec sord sig/memorex.rbs --hide-private"
+  sh "bundle exec sord sig/memox.rbs --hide-private"
 end
 
 task(:build).enhance([:sord])

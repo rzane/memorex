@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Memorex::Cache do
+RSpec.describe Memox::Cache do
   let(:cache) { {a: 100, b: 42} }
-  subject { Memorex::Cache.new(cache) }
+  subject { Memox::Cache.new(cache) }
 
   describe "#merge!" do
     it "adds values to the cache" do
