@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "A brutally simple macro for memoizing methods."
   spec.homepage = "https://github.com/rzane/memorex"
-  spec.required_ruby_version = ">= 3.1.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
