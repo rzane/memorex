@@ -6,7 +6,7 @@ RSpec.describe "scenario: sorbet" do
       extend Memorex
       extend T::Sig
 
-      sig { returns(String) }
+      sig { returns(Integer) }
       memoize def value = Once.assert(:value)
     end.new
 
@@ -19,7 +19,7 @@ RSpec.describe "scenario: sorbet" do
       extend T::Sig
       extend Memorex
 
-      sig { returns(String) }
+      sig { returns(Integer) }
       memoize def value = Once.assert(:value)
     end
 

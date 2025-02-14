@@ -5,19 +5,23 @@ require "memorex"
 require "securerandom"
 require "sorbet-runtime"
 
+module Counter
+  def self.state
+    @state ||= Hash.new(0)
+  end
+
+  def self.increment(key)
+    state[key] += 1
+  end
+end
+
 module Once
   Error = Class.new(StandardError)
 
-  def self.calls
-    @calls ||= Set.new
-  end
-
-  def self.assert(name)
-    if calls.add?(name)
-      SecureRandom.uuid
-    else
-      raise Error, "#{name} was already called"
-    end
+  def self.assert(key)
+    value = Counter.increment(key)
+    raise Error, "#{name} was already called" if value > 1
+    value
   end
 end
 
@@ -33,6 +37,6 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    Once.calls.clear
+    Counter.state.clear
   end
 end
