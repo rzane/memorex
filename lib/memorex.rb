@@ -71,6 +71,19 @@ module Memorex
     end
   end
 
+  # Reset an object's memoization cache
+  #
+  # @api public
+  # @param object [Object]
+  # @return [void]
+  # @example
+  #   Memorex.reset(user)
+  def self.reset(object)
+    cache = object.instance_variable_get(:@_memorex_cache)
+    cache&.clear
+    nil
+  end
+
   # This module is responsible for initializing the cache
   #
   # @api private
