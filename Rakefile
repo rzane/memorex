@@ -15,10 +15,12 @@ end
 
 desc "Generate type defininitions from YARD"
 task :sord do
-  mkdir_p "rbi"
+  rm_rf "rbi"
+  mkdir "rbi"
   sh "bundle exec sord rbi/memorex.rbi --hide-private"
 
-  mkdir_p "sig"
+  rm_rf "sig"
+  mkdir "sig"
   sh "bundle exec sord sig/memorex.rbs --hide-private"
 end
 
