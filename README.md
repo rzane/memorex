@@ -67,7 +67,7 @@ class User
 end
 
 user = User.new
-user.memorex # => #<Memorex::Memory>
+user.memorex # => #<Memorex::Cache>
 
 user.memorex.merge!(id: SecureRandom.id)
 user.memorex.delete(:id)

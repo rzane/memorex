@@ -3,13 +3,13 @@
 module Memorex
   # This class is used to interact with the memoization cache.
   # @api public
-  class Memory
-    # Create a new instance of {Memory}
+  class Cache
+    # Create a new instance of {Cache}
     #
     # @api private
-    # @param memory [Hash<Symbol, BasicObject>] the memoization cache
-    def initialize(memory)
-      @memory = memory
+    # @param cache [Hash<Symbol, BasicObject>] the memoization cache
+    def initialize(cache)
+      @cache = cache
     end
 
     # Add values to the cache
@@ -20,7 +20,7 @@ module Memorex
     # @example
     #   memorex.merge!(foo: "bar")
     def merge!(values)
-      @memory.merge!(values)
+      @cache.merge!(values)
       self
     end
 
@@ -31,7 +31,7 @@ module Memorex
     # @example
     #   memorex.clear
     def clear
-      @memory.clear
+      @cache.clear
       self
     end
 
@@ -43,7 +43,7 @@ module Memorex
     # @example
     #   memorex.delete(:foo)
     def delete(key)
-      @memory.delete(key)
+      @cache.delete(key)
       self
     end
   end

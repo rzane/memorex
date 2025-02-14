@@ -9,7 +9,7 @@ RSpec.describe Memorex::API do
       memoize def value = Counter.increment(:value)
     }.new
 
-    expect(subject.memorex).to be_a(Memorex::Memory)
+    expect(subject.memorex).to be_a(Memorex::Cache)
     expect(subject.value).to be(1)
 
     subject.memorex.clear
