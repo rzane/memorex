@@ -2,13 +2,13 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in memorex.gemspec
 gemspec
 
 gem "rake"
 gem "rspec"
 gem "standard"
 gem "sord"
+gem "abbrev"
 
 gem "sorbet-runtime"
 gem "activesupport"
