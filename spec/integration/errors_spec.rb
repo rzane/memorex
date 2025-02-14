@@ -9,7 +9,7 @@ RSpec.describe "scenario: errors" do
   it "raises an exception when a public method is already memoized" do
     subject = Class.new do
       extend Memorex
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is already memoized")
@@ -21,7 +21,7 @@ RSpec.describe "scenario: errors" do
 
       private
 
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is already memoized")
@@ -33,7 +33,7 @@ RSpec.describe "scenario: errors" do
 
       protected
 
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     expect { subject.memoize(:value) }.to raise_error(ArgumentError, "`:value` is already memoized")
@@ -42,7 +42,7 @@ RSpec.describe "scenario: errors" do
   it "raises an exception when a block argument is provided" do
     subject = Class.new do
       extend Memorex
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end.new
 
     expect { subject.value {} }.to raise_error(ArgumentError, "unsupported block argument")

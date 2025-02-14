@@ -6,13 +6,13 @@ RSpec.describe Memorex::API do
       extend Memorex
       include Memorex::API
 
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     }.new
 
     expect(subject.memorex).to be_a(Memorex::Memory)
     expect(subject.value).to be(subject.value)
 
     subject.memorex.clear
-    expect { subject.value }.to raise_error(Once::Error)
+    expect { subject.value }.to raise_error(Counter::Error)
   end
 end

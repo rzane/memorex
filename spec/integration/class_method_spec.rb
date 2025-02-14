@@ -5,7 +5,7 @@ RSpec.describe "scenario: class method" do
     subject = Class.new do
       class << self
         extend Memorex
-        memoize def value = Once.assert(:value)
+        memoize def value = Counter.once(:value)
       end
     end
 
@@ -16,7 +16,7 @@ RSpec.describe "scenario: class method" do
     subject = Class.new do
       class << self
         extend Memorex
-        def value = Once.assert(:value)
+        def value = Counter.once(:value)
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe "scenario: class method" do
     subject = Class.new do
       class << self
         extend Memorex
-        memoize def value = Once.assert(:value)
+        memoize def value = Counter.once(:value)
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe "scenario: class method" do
 
         private
 
-        memoize def value = Once.assert(:value)
+        memoize def value = Counter.once(:value)
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe "scenario: class method" do
 
         protected
 
-        memoize def value = Once.assert(:value)
+        memoize def value = Counter.once(:value)
       end
     end
 

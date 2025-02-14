@@ -7,7 +7,7 @@ RSpec.describe "scenario: sorbet" do
       extend T::Sig
 
       sig { returns(Integer) }
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end.new
 
     expect(subject.value).to be(subject.value)
@@ -20,7 +20,7 @@ RSpec.describe "scenario: sorbet" do
       extend Memorex
 
       sig { returns(Integer) }
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     subject = Class.new { include parent }.new
@@ -57,7 +57,7 @@ RSpec.describe "scenario: sorbet" do
       def initialize
       end
 
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end.new
 
     expect(subject.value).to be(subject.value)

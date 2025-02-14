@@ -6,6 +6,8 @@ require "securerandom"
 require "sorbet-runtime"
 
 module Counter
+  Error = Class.new(StandardError)
+
   def self.state
     @state ||= Hash.new(0)
   end
@@ -13,14 +15,10 @@ module Counter
   def self.increment(key)
     state[key] += 1
   end
-end
 
-module Once
-  Error = Class.new(StandardError)
-
-  def self.assert(key)
+  def self.once(key)
     value = Counter.increment(key)
-    raise Error, "#{name} was already called" if value > 1
+    raise Error, "#{name} was already called" if value != 1
     value
   end
 end

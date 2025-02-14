@@ -4,7 +4,7 @@ RSpec.describe "scenario: inheritance" do
   it "memoizes through inheritance" do
     parent = Class.new do
       extend Memorex
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     subject = Class.new(parent).new
@@ -14,7 +14,7 @@ RSpec.describe "scenario: inheritance" do
   it "memoizes when the parent extends Memorex" do
     parent = Class.new { extend Memorex }
     subject = Class.new(parent) do
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end.new
 
     expect(subject.value).to be(subject.value)
@@ -23,7 +23,7 @@ RSpec.describe "scenario: inheritance" do
   it "memoizes a method defined in an included module" do
     parent = Module.new do
       extend Memorex
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     subject = Class.new { include parent }.new
@@ -35,7 +35,7 @@ RSpec.describe "scenario: inheritance" do
       extend ActiveSupport::Concern
       extend Memorex
 
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     subject = Class.new { include parent }.new
@@ -58,7 +58,7 @@ RSpec.describe "scenario: inheritance" do
   it "memoizes an overridden method that invokes super" do
     parent = Class.new do
       extend Memorex
-      memoize def value = Once.assert(:value)
+      memoize def value = Counter.once(:value)
     end
 
     subject = Class.new(parent) do
@@ -71,11 +71,11 @@ RSpec.describe "scenario: inheritance" do
   it "does not inherit MemorexMethods module" do
     parent = Class.new do
       extend Memorex
-      memoize def foo = Once.assert(:foo)
+      memoize def foo = Counter.once(:foo)
     end
 
     child = Class.new(parent) do
-      def bar = Once.assert(:bar)
+      def bar = Counter.once(:bar)
     end
 
     expect(child::MemorexMethods).to be(parent::MemorexMethods)
@@ -87,13 +87,13 @@ RSpec.describe "scenario: inheritance" do
   it "does not inherit MemorexMethods module from included module" do
     parent = Module.new do
       extend Memorex
-      memoize def foo = Once.assert(:foo)
+      memoize def foo = Counter.once(:foo)
     end
 
     child = Class.new do
       extend Memorex
       include parent
-      def bar = Once.assert(:bar)
+      def bar = Counter.once(:bar)
     end
 
     expect(child::MemorexMethods).to be(parent::MemorexMethods)
@@ -111,7 +111,7 @@ RSpec.describe "scenario: inheritance" do
 
     subject = Class.new(parent) do
       class << self
-        memoize def value = Once.assert(:value)
+        memoize def value = Counter.once(:value)
       end
     end
 
