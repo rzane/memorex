@@ -2,7 +2,7 @@
 
 module Memorex
   # These methods are use internally by Memorex and are not intended for public use.
-  # @api private
+  # @!visibility private
   module Internal
     # Determine the visibility of a method
     #

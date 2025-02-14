@@ -86,7 +86,7 @@ module Memorex
 
   # This module is responsible for initializing the cache
   #
-  # @api private
+  # @!visibility private
   module Initializer
     # Eagerly initialize the cache before the object is frozen
     #
