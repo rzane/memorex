@@ -1,0 +1,7 @@
+Memorex/MethodDefinition:
+  Description: "Disallows the use of `memoize` without a method definition"
+  Enabled: true
+
+Memorex/MethodSignature:
+  Description: "Disallows the use of `memoize` for methods that accept arguments"
+  Enabled: true

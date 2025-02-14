@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"] = "#{spec.homepage}/releases"
 
-  spec.files = Dir.glob("{lib,sig,rbi}/**/*")
+  spec.files = Dir.glob("{lib,config,sig,rbi}/**/*")
   spec.bindir = "exe"
   spec.executables = []
   spec.require_paths = ["lib"]
