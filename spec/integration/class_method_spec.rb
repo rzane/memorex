@@ -49,7 +49,7 @@ RSpec.describe "scenario: class method" do
       end
     end
 
-    expect { subject.value }.to raise_error(NoMethodError, /private method `value' called/)
+    expect { subject.value }.to raise_error(NoMethodError, /private method [`']value' called/)
     expect(subject.send(:value)).to be(subject.send(:value))
   end
 
@@ -64,7 +64,7 @@ RSpec.describe "scenario: class method" do
       end
     end
 
-    expect { subject.value }.to raise_error(NoMethodError, /protected method `value' called/)
+    expect { subject.value }.to raise_error(NoMethodError, /protected method [`']value' called/)
     expect(subject.send(:value)).to be(subject.send(:value))
   end
 end
