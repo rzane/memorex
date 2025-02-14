@@ -11,6 +11,10 @@ Memorex is designed with the following features in mind:
 * Support for inheritance of memoized class and instance methods.
 * No support for memoization of methods with arguments, which is a feature, not a bug.
 
+## Documentation
+
+[Click here to read the documentation.](https://rubydoc.info/gems/memorex/Memorex)
+
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
@@ -24,37 +28,62 @@ bundle add memorex
 To memoize a method, simply extend the class with `Memorex` and use the `memoize` decorator.
 
 ```ruby
-class Client
+class User
   extend Memorex
 
-  memoize def response
-    Net::HTTP.get(URI('https://example.com'))
+  memoize def id
+    SecureRandom.uuid
   end
 end
 
-client = Client.new
-client.response # => "<!doctype html>..."
+user = User.new
+user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
+user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
 ```
 
-Memorex also provides an API for directly manipulating the cache.
+Memorex can also memoize class methods:
 
 ```ruby
-class Client
+class Configuration
+  class << self
+    extend Memorex
+
+    memoize def instance
+      new(YAML.load_file("config.yml"))
+    end
+  end
+end
+```
+
+### `Memorex::API`
+
+To access the cache directly, include `Memorex::API`.
+
+```ruby
+class User
   extend Memorex
   include Memorex::API
   # ... etc ...
 end
 
-client = Client.new
+user = User.new
+user.memorex # => #<Memorex::Memory>
 
-# Add values to the cache
-client.memorex.merge!(response: "hello")
+user.memorex.merge!(id: SecureRandom.id)
+user.memorex.delete(:id)
+user.memorex.clear
+```
 
-# Remove a value from the cache
-client.memorex.delete(:response)
+### `Memorex.reset`
 
-# Clear the cache
-client.memorex.clear
+Memorex provides a `reset` method for resetting the cache, but `Memorex::API#clear` should be preferred.
+
+```ruby
+user = User.new
+user.id # => "ea16e391-20c2-477a-b393-691633a6483f"
+
+Memorex.reset(user)
+user.id # => "4690993f-408f-4b7a-824b-c6776782b2fd"
 ```
 
 ## Development
