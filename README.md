@@ -11,6 +11,8 @@ Memorex is designed with the following features in mind:
 * Support for inheritance of memoized class and instance methods.
 * No support for memoization of methods with arguments, which is a feature, not a bug.
 * Provides RuboCop rules to ensure consistent usage.
+* Provides RBI definitions for Sorbet users.
+* Provides RBS definitions for Steep users.
 
 ## Documentation
 
