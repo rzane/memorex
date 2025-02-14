@@ -1,4 +1,4 @@
-# Memosa 🧠
+# Memosa 🥂
 
 Memosa is a simple solution for caching method return values in Ruby.
 
