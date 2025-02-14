@@ -1,4 +1,4 @@
-# Memox 🧠
+# Memox 📝🐂
 
 Memox is a simple solution for caching method return values in Ruby.
 
