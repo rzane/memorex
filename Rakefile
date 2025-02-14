@@ -8,6 +8,11 @@ CLOBBER.include("rbi", "sig", ".yardoc")
 
 RSpec::Core::RakeTask.new(:spec)
 
+desc "Generate YARD documentation"
+task :yard do
+  sh "bundle exec yard"
+end
+
 desc "Generate type defininitions from YARD"
 task :sord do
   mkdir_p "rbi"
