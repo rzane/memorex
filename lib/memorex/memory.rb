@@ -5,6 +5,7 @@ module Memorex
   # @api public
   class Memory
     # Create a new instance of {Memory}
+    #
     # @api private
     # @param memory [Hash<Symbol, BasicObject>] the memoization cache
     def initialize(memory)
@@ -12,6 +13,7 @@ module Memorex
     end
 
     # Add values to the cache
+    #
     # @api public
     # @param values [Hash<Symbol, BasicObject>] the values to add to the cache.
     # @return [self]
@@ -23,6 +25,7 @@ module Memorex
     end
 
     # Reset the cache
+    #
     # @api public
     # @return [self]
     # @example
@@ -33,6 +36,7 @@ module Memorex
     end
 
     # Delete a key from the cache
+    #
     # @api public
     # @param key [Symbol]
     # @return [self]

@@ -5,6 +5,7 @@ module Memorex
   # @api private
   module Internal
     # Determine the visibility of a method
+    #
     # @param owner [Module]
     # @param method_name [Symbol]
     # @return [Symbol]
@@ -21,6 +22,7 @@ module Memorex
     end
 
     # Determine if a method is defined (including private methods)
+    #
     # @param owner [Module]
     # @param method_name [Symbol]
     # @return [Boolean]

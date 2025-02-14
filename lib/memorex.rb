@@ -15,7 +15,6 @@ module Memorex
   # @return [Symbol] the name of the memoized method
   # @raise [ArgumentError] when the method is is not defined
   # @raise [ArgumentError] when the method is already memoized
-  #
   # @example
   #   class State
   #     extend Memorex
@@ -73,6 +72,7 @@ module Memorex
   end
 
   # This module is responsible for initializing the cache
+  #
   # @api private
   module Initializer
     # Eagerly initialize the cache before the object is frozen
@@ -93,7 +93,6 @@ module Memorex
     #
     # @api public
     # @return [Memorex::Memory]
-    #
     # @example
     #   class State
     #     extend Memorex
