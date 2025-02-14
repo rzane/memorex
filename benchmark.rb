@@ -64,7 +64,13 @@ Benchmark.ips do |x|
   strategies.each do |name, klass|
     instance = klass.new
     instance.value
-    x.report(name) { instance.value }
+    x.report(name) do |times|
+      i = 0
+      while i < times
+        i = i.succ
+        instance.value
+      end
+    end
   end
   x.compare!(order: :baseline)
 end
