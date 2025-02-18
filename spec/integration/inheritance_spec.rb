@@ -118,4 +118,14 @@ RSpec.describe "scenario: inheritance" do
     subject.freeze
     expect(subject.value).to be(subject.value)
   end
+
+  it "only prepends Initializer once" do
+    a = Class.new { extend Memosa }
+    b = Class.new(a) { memoize def x = 100 }
+    expect(b.ancestors.count(Memosa::Initializer)).to eq(1)
+
+    a.class_eval { memoize def y = 100 }
+    expect(b.ancestors.count(Memosa::Initializer)).to eq(1)
+    expect(b.ancestors).to include(a::MemosaMethods)
+  end
 end

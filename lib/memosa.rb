@@ -6,6 +6,14 @@ require_relative "memosa/version"
 
 # Memosa provides a simple way to memoize methods in Ruby.
 module Memosa
+  # Called when Memorex is extended
+  # @api private
+  # @param base [Module]
+  # @return [void]
+  def self.extended(base)
+    base.prepend(Initializer)
+  end
+
   # Convert a method to a memoized method
   #
   # Memosa does not support memoizing methods that accept arguments.
@@ -62,8 +70,6 @@ module Memosa
   #     prepend_memosa
   #   end
   def prepend_memosa
-    prepend Initializer
-
     if const_defined?(:MemosaMethods, false)
       const_get(:MemosaMethods, false)
     else
