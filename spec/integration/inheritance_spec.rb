@@ -119,4 +119,22 @@ RSpec.describe "scenario: inheritance" do
     expect(b.ancestors.count(Memosa::Initializer)).to eq(1)
     expect(b.ancestors).to include(a::MemosaMethods)
   end
+
+  it "prepends MemosaMethods with multiple levels of singleton class inheritance" do
+    a = Class.new { extend Memosa }
+    b = Class.new(a)
+    c = Class.new(b) { memoize def value = 100 }
+
+    expect(b::MemosaMethods).not_to be(a::MemosaMethods)
+    expect(c::MemosaMethods).not_to be(b::MemosaMethods)
+  end
+
+  it "prepends MemosaMethods with multiple levels of singleton class inheritance" do
+    a = Class.new { class << self; extend Memosa; end }
+    b = Class.new(a)
+    c = Class.new(b) { class << self; memoize def value = 100; end }
+
+    expect(b.singleton_class::MemosaMethods).not_to be(a.singleton_class::MemosaMethods)
+    expect(c.singleton_class::MemosaMethods).not_to be(b.singleton_class::MemosaMethods)
+  end
 end
