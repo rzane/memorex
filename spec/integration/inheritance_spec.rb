@@ -74,13 +74,8 @@ RSpec.describe "scenario: inheritance" do
       memoize def foo = Counter.once(:foo)
     end
 
-    child = Class.new(parent) do
-      def bar = Counter.once(:bar)
-    end
+    child = Class.new(parent)
 
-    expect(child::MemosaMethods).to be(parent::MemosaMethods)
-
-    child.memoize(:bar)
     expect(child::MemosaMethods).not_to be(parent::MemosaMethods)
   end
 
@@ -93,12 +88,8 @@ RSpec.describe "scenario: inheritance" do
     child = Class.new do
       extend Memosa
       include parent
-      def bar = Counter.once(:bar)
     end
 
-    expect(child::MemosaMethods).to be(parent::MemosaMethods)
-
-    child.memoize(:bar)
     expect(child::MemosaMethods).not_to be(parent::MemosaMethods)
   end
 

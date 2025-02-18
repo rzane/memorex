@@ -13,12 +13,8 @@ RSpec.describe "scenario: instance method" do
   it "defines MemosaMethods" do
     subject = Class.new do
       extend Memosa
-      def value = Counter.once(:value)
     end
 
-    expect(subject.const_defined?(:MemosaMethods)).to be(false)
-
-    subject.memoize(:value)
     expect(subject::MemosaMethods).to be_a(Module)
     expect(subject.ancestors).to include(subject::MemosaMethods)
   end

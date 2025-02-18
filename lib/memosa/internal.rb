@@ -29,5 +29,13 @@ module Memosa
     def self.method_defined?(owner, method_name)
       owner.method_defined?(method_name) || owner.private_method_defined?(method_name)
     end
+
+    # Define and prepend a module named `MemosaMethods`
+    #
+    # @prepend owner [Module]
+    # @return [Module]
+    def self.prepend_memosa_methods(owner)
+      owner.const_set(:MemosaMethods, Module.new).tap { |mod| owner.prepend(mod) }
+    end
   end
 end

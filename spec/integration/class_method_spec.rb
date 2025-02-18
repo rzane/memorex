@@ -16,14 +16,11 @@ RSpec.describe "scenario: class method" do
     subject = Class.new do
       class << self
         extend Memosa
-        def value = Counter.once(:value)
       end
     end
 
-    expect(subject.singleton_class.const_defined?(:MemosaMethods)).to be(false)
-
-    subject.singleton_class.memoize(:value)
     expect(subject.singleton_class::MemosaMethods).to be_a(Module)
+    expect(subject.singleton_class.ancestors).to include(subject.singleton_class::MemosaMethods)
   end
 
   it "memoizes a class method when the class is frozen" do

@@ -12,6 +12,14 @@ module Memosa
   # @return [void]
   def self.extended(base)
     base.prepend(Initializer)
+
+    if base.singleton_class?
+      base.prepend(SingletonInherited)
+    else
+      base.extend(Inherited)
+    end
+
+    Internal.prepend_memosa_methods(base)
   end
 
   # Convert a method to a memoized method
@@ -33,7 +41,7 @@ module Memosa
   #   end
   #
   def memoize(method_name)
-    methods = prepend_memosa
+    methods = const_get(:MemosaMethods, false)
     visibility = Internal.visibility(self, method_name)
 
     if Internal.method_defined?(methods, method_name)
@@ -52,29 +60,6 @@ module Memosa
     RUBY
 
     method_name
-  end
-
-  # Define and prepend MemosaMethods
-  #
-  # When {memoize} is called, Memosa will define a module named MemosaMethods. Memoized
-  # methods will be defined on this module and then prepended to the class.
-  #
-  # This method allows you to force that module to be defined and prepended, which is
-  # useful when order matters.
-  #
-  # @api public
-  # @return [Module]
-  # @example
-  #   class Foo
-  #     extend Memosa
-  #     prepend_memosa
-  #   end
-  def prepend_memosa
-    if const_defined?(:MemosaMethods, false)
-      const_get(:MemosaMethods, false)
-    else
-      const_set(:MemosaMethods, Module.new).tap { |mod| prepend(mod) }
-    end
   end
 
   # Reset an object's memoization cache
@@ -101,6 +86,20 @@ module Memosa
     # @return [self]
     def freeze
       @_memosa_cache ||= {}
+      super
+    end
+  end
+
+  module Inherited
+    def inherited(base)
+      Internal.prepend_memosa_methods(base)
+      super
+    end
+  end
+
+  module SingletonInherited
+    def inherited(base)
+      Internal.prepend_memosa_methods(base.singleton_class)
       super
     end
   end

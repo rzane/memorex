@@ -42,7 +42,6 @@ RSpec.describe "scenario: sorbet" do
   it "does not raise when `#initialize` is defined" do
     subject = Class.new do
       extend T::Sig
-      extend Memosa
 
       # Ideally, this would eagerly instantiate the cache in `#initialize`.
       # Sorbet won't let us prepend methods before the sig is added.
@@ -51,7 +50,7 @@ RSpec.describe "scenario: sorbet" do
       # Options:
       # 1. Override `.new` and instantiate the cache there
       # 2. Tap into `method_added`, undefine `#initialize` and redefine it after the sig is added
-      prepend_memosa
+      extend Memosa
 
       sig { void }
       def initialize
