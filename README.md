@@ -100,6 +100,20 @@ inherit_gem:
   memosa: config/rubocop.yml
 ```
 
+## ActiveRecord
+
+If you're using ActiveRecord, you might want to ensure that Memosa caches are flushed whenever
+the record is reloaded.
+
+```ruby
+class ApplicationRecord < ActiveRecord::Base
+  def reload
+    super
+    Memosa.reset(self)
+  end
+end
+```
+
 ## The name?
 
 I'm glad you asked. All credit goes to [@devinburnette](https://github.com/devinburnette).
