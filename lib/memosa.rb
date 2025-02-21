@@ -6,7 +6,7 @@ require_relative "memosa/version"
 
 # Memosa provides a simple way to memoize methods in Ruby.
 module Memosa
-  # Called when Memorex is extended
+  # Called when Memosa is extended
   # @api private
   # @param base [Module]
   # @return [void]
