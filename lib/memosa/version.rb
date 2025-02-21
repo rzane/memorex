@@ -3,5 +3,5 @@
 module Memosa
   # The current Memosa version
   # @return [String]
-  VERSION = "0.8.1"
+  VERSION = "0.8.2"
 end
