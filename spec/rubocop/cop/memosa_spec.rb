@@ -12,6 +12,13 @@ RSpec.describe RuboCop::Cop::Memosa, :config do
       RUBY
     end
 
+    it "reports a violation when a local variable is provided" do
+      expect_offense(<<~RUBY)
+        memoize foo
+        ^^^^^^^ `memoize` should precede a method definition (e.g. `memoize def`)
+      RUBY
+    end
+
     it "does not report a violation when memoize is used next to a method definition" do
       expect_no_offenses(<<~RUBY)
         memoize def foo; end

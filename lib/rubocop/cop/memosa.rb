@@ -28,7 +28,7 @@ module RuboCop
         MSG = "`memoize` should precede a method definition (e.g. `memoize def`)"
 
         def_node_matcher :invalid_usage?, <<~PATTERN
-          (send nil? :memoize (sym _))
+          (send nil? :memoize !(def ...))
         PATTERN
 
         # @!visibility private
