@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    memosa (0.8.2)
+    memosa (0.8.3)
 
 GEM
   remote: https://rubygems.org/
